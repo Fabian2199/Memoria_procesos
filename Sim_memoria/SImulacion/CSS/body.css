@@ -1,0 +1,31 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: arial;
+
+}
+body{
+	background-color: #ffffff;
+	opacity: 1;
+	background-image:  radial-gradient(#888888 0.7000000000000001px, transparent 0.7000000000000001px), radial-gradient(#888888 0.7000000000000001px, #ffffff 0.7000000000000001px);
+	background-size: 28px 28px;
+	background-position: 0 0,14px 14px;
+}
+footer{
+	width: 100%;
+	background: rgba(51,51,51,0.9);
+}
+.contenedor p{
+	text-align: center;
+	color: white;
+	font-style: 28px;
+}
+.sociales{
+	width: 100%;
+	text-align: center;
+	font-size: 28px;
+}
+.sociales a{
+	color: white;
+}
