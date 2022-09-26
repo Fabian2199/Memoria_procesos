@@ -19,14 +19,23 @@
             for ($i=0; $i < count($activos); $i++) { 
                 $tamaño = $activos[$i]->getTamaño();
                 $prioridad = $activos[$i]->getPrioridad();
-                if (($tam>$tamaño) and ($prioridad= 'Alta') ) {
+                if (($tam>$tamaño) and ($prioridad == 'Alta') ) {
                     array_push($procesos_memoria,$activos[$i]);
-                }elseif (($tam>$activos) and ($prioridad= 'Alta')) {
-                    # code...
-                }else {
-                    # code...
+                    $tam= $tam-$tamaño;
+                    unset($activos[$i]);
+                }elseif (($tam>$$tamaño) and ($prioridad == 'Media')) {
+                    array_push($procesos_memoria,$activos[$i]);
+                    $tam= $tam-$tamaño;
+                    unset($activos[$i]);
+                }elseif (($tam>$$tamaño) and ($prioridad == 'Baja')) {
+                    array_push($procesos_memoria,$activos[$i]);
+                    $tam= $tam-$tamaño;
+                    unset($activos[$i]);
                 }
             }
         }
+
+        return $procesos_memoria;
     }
+    
 ?>
