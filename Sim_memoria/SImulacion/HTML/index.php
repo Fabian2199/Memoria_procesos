@@ -40,9 +40,9 @@ $proceso = getProceso();
                             <input type="number" placeholder="Duracion proceso" name="duracion" pattern="[0-9]+" required>
                             <select name="prioridad" id="prioridad" class="select" required>
                                 <option value="NULL">Seleccionar prioridad</option>
-                                <option value="ALTA">Alta</option>
-                                <option value="MEDIA">Media</option>
-                                <option value="BAJA">Baja</option>
+                                <option value="Alta">Alta</option>
+                                <option value="Media">Media</option>
+                                <option value="Baja">Baja</option>
                             </select>
                         </div>
                         <input type="submit" class="btn-submit" id="btn-submit" value="AÑADIR">
