@@ -14,4 +14,19 @@
         $consulta_proceso= $conexion ->query($sql_proceso);
         return $consulta_proceso;
     }
+    function getDatosMemoria($id)
+    {
+        include('conexion.php');
+        $sql_datosMemoria= "SELECT * FROM `memoria` WHERE id_memoria = '$id';";
+        $consulta_datosMemoria= $conexion ->query($sql_datosMemoria);
+        return $consulta_datosMemoria;
+    }
+    function getProcesosTerm()
+    {
+        include('conexion.php');
+        $sql_proceso= "SELECT pt.id_proceso,p.tamaño,pt.duracion FROM procesos_terminados pt JOIN proceso p 
+        ON p.id_proceso = pt.id_proceso ";
+        $consulta_proceso= $conexion ->query($sql_proceso);
+        return $consulta_proceso;
+    }
 ?>

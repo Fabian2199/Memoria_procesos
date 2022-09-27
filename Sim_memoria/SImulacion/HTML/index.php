@@ -10,7 +10,7 @@ $proceso = getProceso();
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>INDEX</title>
+    <title>Index</title>
     <link rel="stylesheet" type="text/css" href="../iconos/web-fonts-with-css/css/fontawesome-all.css">
     <link rel="stylesheet" type="text/css" href="../CSS/banner.css">
     <link rel="stylesheet" type="text/css" href="../CSS/menu.css">
@@ -74,6 +74,7 @@ $proceso = getProceso();
                                 <th>ID_memoria</th>
                                 <th>Espacio de memoria</th>
                                 <th>Agregar proceso</th>
+                                <th>Simular</th>
                             </thead>
                             <tbody>
                                 <?php while ($row = $memoria->fetch_assoc()) { ?>
@@ -81,6 +82,7 @@ $proceso = getProceso();
                                         <th><?php echo $row['id_memoria']; ?> </th>
                                         <th><?php echo $row['tamaño']; ?> Kb</th>
                                         <th> <button id="btn-abrir-popup" class="btn-abrir-popup"><img src="../img_gen/plus.png" class="plus"></button> </th>
+                                        <th><a href="../HTML/sim.php?id_memoria=<?php echo $row['id_memoria']; ?>" >Simular</a></th>
                                     </tr>
                                 <?php } ?>
                             </tbody>

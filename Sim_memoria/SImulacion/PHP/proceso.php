@@ -35,6 +35,10 @@ class proceso
     {
         return $this->duracion;
     }
+    public function getId()
+    {
+        return $this->id_proceso;
+    }
 }
 
 ?>
