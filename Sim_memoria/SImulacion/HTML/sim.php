@@ -44,12 +44,14 @@ $proceos_finalizados = getProcesosTerm();
                 <div class="proceso" id="tar">
                     <div class="adelante">
                         <h1>Lista de procesos activos</h1>
+                        
                         <table>
                             <thead>
                                 <th>Id_proceso</th>
                                 <th>Espacio en memoria</th>
                                 <th>Tiempo de ejecucion</th>
                                 <th>Prioridad</th>
+                                <th>Estado</th>
                             </thead>
                             <tbody>
                                 <?php for ($i = 0; $i < count($procesos_activos); $i++) { ?>
@@ -58,6 +60,7 @@ $proceos_finalizados = getProcesosTerm();
                                         <th><?php echo $procesos_activos[$i]->getTamaño(); ?> Kb</th>
                                         <th><?php echo $procesos_activos[$i]->getDuracion(); ?> Seg</th>
                                         <th><?php echo $procesos_activos[$i]->getPrioridad(); ?> </th>
+                                        <th><?php echo $procesos_activos[$i]->getEstado(); ?> </th>
                                     </tr>
                                 <?php } ?>
                             </tbody>
