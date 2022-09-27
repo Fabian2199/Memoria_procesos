@@ -38,12 +38,7 @@ $proceso = getProceso();
                         <div class="contenedor-inputs">
                             <input type="number" placeholder="Espacio de memoria" name="espacio" pattern="[0-9]+" required>
                             <input type="number" placeholder="Duracion proceso" name="duracion" pattern="[0-9]+" required>
-                            <select name="prioridad" id="prioridad" class="select" required>
-                                <option value="NULL">Seleccionar prioridad</option>
-                                <option value="Alta">Alta</option>
-                                <option value="Media">Media</option>
-                                <option value="Baja">Baja</option>
-                            </select>
+                            <input type="number" placeholder="Prioridad" name="prioridad" pattern="[0-9]+" min="0" max="19" required>
                         </div>
                         <input type="submit" class="btn-submit" id="btn-submit" value="AÑADIR">
                     </form>
@@ -98,7 +93,7 @@ $proceso = getProceso();
                             <tbody>
                                 <?php while ($row = $proceso->fetch_assoc()) { ?>
                                     <tr>
-                                        <th><?php echo $row['id_proceso']; ?> </th>
+                                        <th>PR <?php echo $row['id_proceso']; ?> </th>
                                         <th><?php echo $row['tamaño']; ?> Kb</th>
                                         <th><?php echo $row['duracion']; ?> ms</th>
                                         <th><?php echo $row['prioridad']; ?></th>

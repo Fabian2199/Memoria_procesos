@@ -5,23 +5,25 @@ class proceso
     public $tamaño;
     public $duracion;
     public $prioridad;
+    public $estado;
     public $cronometro=0;
 
-    public function __construct($id,$tam,$dur,$pri)
+    public function __construct($id,$tam,$dur,$pri,$est)
     {
         $this->id_proceso=$id;
         $this->tamaño=$tam;
         $this->duracion=$dur;
         $this->prioridad=$pri;
-    }
-    public function __construct2()
-    {
-        
+        $this->estado=$est;
     }
 
     public function setCronometro($cron)
     {
         $this->cronometro=$cron;
+    }
+    public function setEstado($est)
+    {
+        $this->estado=$est;
     }
     public function getTamaño()
     {
@@ -38,6 +40,10 @@ class proceso
     public function getId()
     {
         return $this->id_proceso;
+    }
+    public function getEstado()
+    {
+        return $this->estado;
     }
     public function getCronometro()
     {

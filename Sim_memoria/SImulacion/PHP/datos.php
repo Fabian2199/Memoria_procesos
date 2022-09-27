@@ -10,7 +10,7 @@
     function getProceso()
     {
         include('conexion.php');
-        $sql_proceso= "SELECT * FROM `proceso`";
+        $sql_proceso= "SELECT * FROM `proceso` ORDER BY  prioridad ";
         $consulta_proceso= $conexion ->query($sql_proceso);
         return $consulta_proceso;
     }

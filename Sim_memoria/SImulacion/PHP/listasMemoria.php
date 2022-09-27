@@ -4,7 +4,7 @@ function procesosActivos($listaProceso)
 {
     $listActivos = array();
     while ($row = $listaProceso->fetch_assoc()) {
-        $proceso_i = new proceso($row['id_proceso'], $row['tamaño'], $row['duracion'], $row['prioridad']);
+        $proceso_i = new proceso($row['id_proceso'], $row['tamaño'], $row['duracion'], $row['prioridad'],$row['estado']);
         array_push($listActivos, $proceso_i);
     }
     return $listActivos;
@@ -19,23 +19,14 @@ function simMemoria($tam, $activos)
         $contador= count($activos);
         for ($i = 1; $i < $contador; $i++) {
             $tamaño = $activos[$i]->getTamaño();
-            $prioridad = $activos[$i]->getPrioridad();
-            if (($activos[0] > $tamaño) and ($prioridad == 'Alta')) {
+            if ($activos[0] > $tamaño) {
+                $estado ="Ejecutando";
+                $activos[$i]->setEstado($estado);
                 array_push($procesos_memoria, $activos[$i]);
                 $activos[0] = $activos[0] - $tamaño;
                 unset($activos[$i]);
                 $contador--;
-            } elseif (($activos[0] > $$tamaño) and ($prioridad == 'Media')) {
-                array_push($procesos_memoria, $activos[$i]);
-                $activos[0] = $activos[0]- $tamaño;
-                unset($activos[$i]);
-                $contador--;
-            } elseif (($activos[0]> $$tamaño) and ($prioridad == 'Baja')) {
-                array_push($procesos_memoria, $activos[$i]);
-                $activos[0] = $activos[0] - $tamaño;
-                unset($activos[$i]);
-                $contador--;
-            }
+            } 
         }
     }
 

@@ -2,7 +2,8 @@ create table PROCESO(
    id_proceso		INT		not null,
    tamaño	 	FLOAT  		not null,
    duracion		INT	  	not null,
-   prioridad		VARCHAR(20)	not null		     
+   prioridad		INT	not null	,
+   estado      VARCHAR(20) not null     
 );
 
 create table MEMORIA(
