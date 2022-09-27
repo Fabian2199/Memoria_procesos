@@ -39,6 +39,10 @@ class proceso
     {
         return $this->id_proceso;
     }
+    public function getCronometro()
+    {
+        return $this->cronometro;
+    }
 }
 
 ?>

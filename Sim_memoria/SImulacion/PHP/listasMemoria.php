@@ -57,4 +57,32 @@ function ejecProceso($proceso, $temporizador,$id_m,$tam)
     }
     return $tam;
 }
-?>
+function ejeUnProceso($proceso, $temporizador,$id_m,$tam)
+{
+    include("reg_proce_ter.php");
+    $duracion = $proceso->getDuracion();
+    $crono = $proceso->getCronometro();
+    $crono++;
+    if ($duracion == $crono) {
+        $time_act = intval(date('s'));
+        $id_p= $proceso->getId();
+        $dur= $temporizador-$time_act;
+        $tam = $tam+$proceso->getTamaño();
+        reg_proce_term($id_m,$id_p,$dur);
+    }
+    $proceso->setCronometro($crono);
+    return $tam;
+}
+function ejecProcesosSim($procesos_memoria,$temporizador,$id_m,$tam)
+{
+    $tam_Actual =$tam;
+    while ($tam==$tam_Actual) {
+        $contador = count($procesos_memoria);
+        for ($i=0; $i <$contador ; $i++) { 
+            $tam_Actual = ejeUnProceso($procesos_memoria[$i],$temporizador,$id_m,$tam);
+            if ($tam_Actual!=$tam) {
+                unset($procesos_memoria[$i]);
+            }
+        }
+    }
+}
