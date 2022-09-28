@@ -32,6 +32,7 @@ for ($i = 1; $i < count($procesos_ejecutando); $i++) {
     <link rel="stylesheet" type="text/css" href="../CSS/tablas.css">
     <link rel="stylesheet" type="text/css" href="../CSS/popup.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 </head>
 
 <body>
@@ -98,6 +99,7 @@ for ($i = 1; $i < count($procesos_ejecutando); $i++) {
                                 ?>
                             </tbody>
                         </table>
+                        <canvas id="modelsChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -136,10 +138,13 @@ unset($procesos_ejecutando[0]);
 $tamañó_lista= count($procesos_ejecutando);
 $lista = json_encode($procesos_ejecutando)
 ?>
-<Script>
+<script src="../JS//helpers.js"></script>
+<Script src="../JS/grafica.js"></Script>
+<script>
     var lista=<?php echo $lista?>;
-    
-    var tamañó =<?php echo $tamañó_lista?>;
-    alert(lista[1].duracion)
-</Script>
+    var tamano =<?php echo $tamañó_lista?>;
+    var libre = <?php echo $tamaño_libre_memoria?>;
+    //alert(lista[1].duracion)
+    alert(tamano)
+    dibujarGrafica(lista,tamano,libre);</script>
 </html>
