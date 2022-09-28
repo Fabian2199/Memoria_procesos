@@ -9,6 +9,14 @@ function procesosActivos($listaProceso)
     }
     return $listActivos;
 }
+function actualizarActivos($listaActivos,$listaEjecutando)
+{
+    for ($i = 1; $i < count($listaEjecutando); $i++) {
+        $indice = array_search($listaEjecutando[2], $listaActivos);
+        unset($listaActivos[$indice]);
+    }
+    return $listaActivos;
+}
 function simMemoria($tam, $activos)
 {
     $procesos_memoria = array();

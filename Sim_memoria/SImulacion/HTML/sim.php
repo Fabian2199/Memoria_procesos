@@ -11,10 +11,7 @@ $procesos = getProceso();
 $procesos_activos = procesosActivos($procesos);
 $procesos_ejecutando = simMemoria($tamaño, $procesos_activos);
 $proceos_finalizados = getProcesosTerm();
-for ($i = 1; $i < count($procesos_ejecutando); $i++) {
-    $indice = array_search($procesos_ejecutando[2], $procesos_activos);
-    unset($procesos_activos[$indice]);
-}
+//$procesos_activos= actualizarActivos($procesos_activos,$procesos_ejecutando);
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +46,7 @@ for ($i = 1; $i < count($procesos_ejecutando); $i++) {
                     <div class="adelante">
                         <h1>Lista de procesos activos</h1>
 
-                        <table>
+                        <table id="activos">
                             <thead>
                                 <th>Id_proceso</th>
                                 <th>Espacio en memoria</th>
@@ -57,17 +54,7 @@ for ($i = 1; $i < count($procesos_ejecutando); $i++) {
                                 <th>Prioridad</th>
                                 <th>Estado</th>
                             </thead>
-                            <tbody>
-                                <?php foreach ($procesos_activos as $proceso) { ?>
-                                    <tr>
-                                        <th>PR <?php echo $proceso->getId(); ?> </th>
-                                        <th><?php echo $proceso->getTamaño(); ?> Kb</th>
-                                        <th><?php echo $proceso->getDuracion(); ?> Seg</th>
-                                        <th><?php echo $proceso->getPrioridad(); ?> </th>
-                                        <th><?php echo $proceso->getEstado(); ?> </th>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
+                            <tbody id="cuerpo_tabla"></tbody>
                         </table>
                     </div>
                 </div>
@@ -77,28 +64,6 @@ for ($i = 1; $i < count($procesos_ejecutando); $i++) {
                     <div class="adelante">
                         <h1>Procesos en memoria</h1>
                         <input type="text" id="contador">
-                        <table>
-                            <thead>
-                                <th>Id proceso</th>
-                                <th>Espacio en memoria</th>
-                                <th>Tiempo de ejecucion</th>
-                                <th>Estado</th>
-                            </thead>
-                            <tbody>
-                                <?php for ($i = 1; $i < count($procesos_ejecutando); $i++) { ?>
-                                    <tr>
-                                        <th>PR <?php echo $procesos_ejecutando[$i]->getId(); ?> </th>
-                                        <th><?php echo $procesos_ejecutando[$i]->getTamaño(); ?> Kb</th>
-                                        <th><?php echo $procesos_ejecutando[$i]->getCronometro(); ?> Seg</th>
-                                        <th><?php echo $procesos_ejecutando[$i]->getEstado(); ?> </th>
-                                    </tr>
-
-                                <?php } ?>
-                                <?php
-                                $tam = ejeUnProceso($procesos_ejecutando[1], 10, $memoria, 10);
-                                ?>
-                            </tbody>
-                        </table>
                         <canvas id="modelsChart"></canvas>
                     </div>
                 </div>
@@ -109,7 +74,7 @@ for ($i = 1; $i < count($procesos_ejecutando); $i++) {
                         <h1>Procesos terminados</h1>
                         <table>
                             <thead>
-                                <th>Id_proceso</th>
+                                <th>Id proceso</th>
                                 <th>Espacio en memoria</th>
                                 <th>Tiempo de ejecucion</th>
                                 <th>Estado</th>
@@ -132,19 +97,49 @@ for ($i = 1; $i < count($procesos_ejecutando); $i++) {
     </main>
 </body>
 <script src="../JS/contador.js"></script>
-<?php 
-$tamaño_libre_memoria= $procesos_ejecutando[0];
+<?php
+//datos lista de procesos ejecutando
+$tamaño_libre_memoria = $procesos_ejecutando[0];
 unset($procesos_ejecutando[0]);
-$tamañó_lista= count($procesos_ejecutando);
+$tamañó_lista = count($procesos_ejecutando);
 $lista = json_encode($procesos_ejecutando)
+?>
+<?php
+//datos lista de procesos activos
+$tamañó_lista_activos = count($procesos_activos);
+$lista_activos = json_encode($procesos_activos)
 ?>
 <script src="../JS//helpers.js"></script>
 <Script src="../JS/grafica.js"></Script>
+<Script src="../JS/tabla.js"></Script>
+<Script src="../JS/funciones_simulador.js"></Script>
 <script>
-    var lista=<?php echo $lista?>;
-    var tamano =<?php echo $tamañó_lista?>;
-    var libre = <?php echo $tamaño_libre_memoria?>;
-    //alert(lista[1].duracion)
-    alert(tamano)
-    dibujarGrafica(lista,tamano,libre);</script>
+    var iterador=0;
+    function ejecucion() {
+        iterador++;
+        var datos = [];
+        //datos procesos ejecutando
+        var lista_ejecutando = <?php echo $lista ?>;
+        var tamano_lista_ejecutando = <?php echo $tamañó_lista ?>;
+        var libre = <?php echo $tamaño_libre_memoria ?>;
+        //datos procesos activos
+        lista_activos = <?php echo $lista_activos ?>;
+        lista_activos = prueba(lista_activos,iterador);
+        var tamano_lista_activos = <?php echo $tamañó_lista_activos ?>;
+        datos.push(lista_ejecutando, tamano_lista_ejecutando, libre, lista_activos, tamano_lista_activos);
+        dibujarTabla(lista_activos, 'activos', tamano_lista_activos);
+        dibujarGrafica(lista_ejecutando, tamano_lista_ejecutando, libre);
+        return datos;
+    }
+    setInterval('ejecucion()', 5000);
+    var datos = ejecucion();
+    //datos procesos ejecutando
+    var lista_ejecutando = datos[0];
+    var tamano_lista_ejecutando = datos[1];
+    var libre = datos[1];
+    setInterval(console.log(iterador), 5000);
+    //dibujarGrafica(lista_ejecutando, tamano_lista_ejecutando, libre);
+
+</script>
+
 </html>

@@ -9,7 +9,6 @@ function dibujarGrafica(lista,tamano,espacio_memoria) {
         var espacio=lista[index].tamano;
         label.push(proceso)
         datas.push(espacio)
-        console.log(lista[index].id_proceso);
     }
 
     Chart.defaults.color = '#282625'
@@ -29,7 +28,11 @@ function dibujarGrafica(lista,tamano,espacio_memoria) {
                 backgroundColor: getDataColors(15)
             }]
         }
-        new Chart('modelsChart', { type: 'doughnut', data })
+        if (window.grafica) {
+            window.grafica.clear();
+            window.grafica.destroy();
+        }
+        window.grafica = new Chart('modelsChart', { type: 'doughnut', data })
     }
     
     printCharts()
