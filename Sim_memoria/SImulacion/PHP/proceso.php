@@ -2,7 +2,7 @@
 class proceso
 {
     public $id_proceso;
-    public $tamaño;
+    public $tamano;
     public $duracion;
     public $prioridad;
     public $estado;
@@ -11,7 +11,7 @@ class proceso
     public function __construct($id,$tam,$dur,$pri,$est)
     {
         $this->id_proceso=$id;
-        $this->tamaño=$tam;
+        $this->tamano=$tam;
         $this->duracion=$dur;
         $this->prioridad=$pri;
         $this->estado=$est;
@@ -27,7 +27,7 @@ class proceso
     }
     public function getTamaño()
     {
-        return $this->tamaño;
+        return $this->tamano;
     }
     public function getPrioridad()
     {

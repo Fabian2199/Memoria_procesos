@@ -9,8 +9,12 @@ while ($row = $datosMemoria->fetch_assoc()) {
 }
 $procesos = getProceso();
 $procesos_activos = procesosActivos($procesos);
+$procesos_ejecutando = simMemoria($tamaño, $procesos_activos);
 $proceos_finalizados = getProcesosTerm();
-
+for ($i = 1; $i < count($procesos_ejecutando); $i++) {
+    $indice = array_search($procesos_ejecutando[2], $procesos_activos);
+    unset($procesos_activos[$indice]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +31,6 @@ $proceos_finalizados = getProcesosTerm();
     <link rel="stylesheet" type="text/css" href="../CSS/principal.css">
     <link rel="stylesheet" type="text/css" href="../CSS/tablas.css">
     <link rel="stylesheet" type="text/css" href="../CSS/popup.css">
-    <script language="javascript" src="..\..\js\jquery-3.6.0.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 
@@ -44,7 +47,7 @@ $proceos_finalizados = getProcesosTerm();
                 <div class="proceso" id="tar">
                     <div class="adelante">
                         <h1>Lista de procesos activos</h1>
-                        
+
                         <table>
                             <thead>
                                 <th>Id_proceso</th>
@@ -54,13 +57,13 @@ $proceos_finalizados = getProcesosTerm();
                                 <th>Estado</th>
                             </thead>
                             <tbody>
-                                <?php for ($i = 0; $i < count($procesos_activos); $i++) { ?>
+                                <?php foreach ($procesos_activos as $proceso) { ?>
                                     <tr>
-                                        <th>PR <?php echo $procesos_activos[$i]->getId(); ?> </th>
-                                        <th><?php echo $procesos_activos[$i]->getTamaño(); ?> Kb</th>
-                                        <th><?php echo $procesos_activos[$i]->getDuracion(); ?> Seg</th>
-                                        <th><?php echo $procesos_activos[$i]->getPrioridad(); ?> </th>
-                                        <th><?php echo $procesos_activos[$i]->getEstado(); ?> </th>
+                                        <th>PR <?php echo $proceso->getId(); ?> </th>
+                                        <th><?php echo $proceso->getTamaño(); ?> Kb</th>
+                                        <th><?php echo $proceso->getDuracion(); ?> Seg</th>
+                                        <th><?php echo $proceso->getPrioridad(); ?> </th>
+                                        <th><?php echo $proceso->getEstado(); ?> </th>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -72,21 +75,27 @@ $proceos_finalizados = getProcesosTerm();
                 <div class="proceso" id="tar">
                     <div class="adelante">
                         <h1>Procesos en memoria</h1>
+                        <input type="text" id="contador">
                         <table>
                             <thead>
-                                <th>Id_proceso</th>
+                                <th>Id proceso</th>
                                 <th>Espacio en memoria</th>
                                 <th>Tiempo de ejecucion</th>
+                                <th>Estado</th>
                             </thead>
                             <tbody>
-                                <?php $procesos_terminados; ?>
-                                <?php for ($i = 0; $i < count($procesos_activos); $i++) { ?>
+                                <?php for ($i = 1; $i < count($procesos_ejecutando); $i++) { ?>
                                     <tr>
-                                        <th>PR <?php echo $procesos_activos[$i]->getId(); ?> </th>
-                                        <th><?php echo $procesos_activos[$i]->getTamaño(); ?> Kb</th>
-                                        <th><?php echo $procesos_activos[$i]->getDuracion(); ?> Seg</th>
+                                        <th>PR <?php echo $procesos_ejecutando[$i]->getId(); ?> </th>
+                                        <th><?php echo $procesos_ejecutando[$i]->getTamaño(); ?> Kb</th>
+                                        <th><?php echo $procesos_ejecutando[$i]->getCronometro(); ?> Seg</th>
+                                        <th><?php echo $procesos_ejecutando[$i]->getEstado(); ?> </th>
                                     </tr>
+
                                 <?php } ?>
+                                <?php
+                                $tam = ejeUnProceso($procesos_ejecutando[1], 10, $memoria, 10);
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -101,6 +110,7 @@ $proceos_finalizados = getProcesosTerm();
                                 <th>Id_proceso</th>
                                 <th>Espacio en memoria</th>
                                 <th>Tiempo de ejecucion</th>
+                                <th>Estado</th>
                             </thead>
                             <tbody>
                                 <?php while ($row = $proceos_finalizados->fetch_assoc()) { ?>
@@ -108,7 +118,7 @@ $proceos_finalizados = getProcesosTerm();
                                         <th><?php echo $row['id_proceso']; ?> </th>
                                         <th><?php echo $row['tamaño']; ?> Kb</th>
                                         <th><?php echo $row['duracion']; ?> ms</th>
-                                        <th><?php echo $row['prioridad']; ?></th>
+                                        <th><?php echo $row['estado']; ?></th>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -119,6 +129,17 @@ $proceos_finalizados = getProcesosTerm();
         </div>
     </main>
 </body>
-<script src="../JS/popup.js"></script>
-
+<script src="../JS/contador.js"></script>
+<?php 
+$tamaño_libre_memoria= $procesos_ejecutando[0];
+unset($procesos_ejecutando[0]);
+$tamañó_lista= count($procesos_ejecutando);
+$lista = json_encode($procesos_ejecutando)
+?>
+<Script>
+    var lista=<?php echo $lista?>;
+    
+    var tamañó =<?php echo $tamañó_lista?>;
+    alert(lista[1].duracion)
+</Script>
 </html>

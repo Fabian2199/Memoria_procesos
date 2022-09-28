@@ -39,6 +39,7 @@
 	margin: 10px;
 	-webkit-perspective: 1500;
 	perspective: 1500;
+	text-align: center;
 
 }
 
@@ -306,7 +307,7 @@ footer {
   option[selected] {
 	  background-color: orange;
   }
-  form  input {
+  input {
 	margin-bottom: 20px;
 	height: 40px;
 	width: 200px;
