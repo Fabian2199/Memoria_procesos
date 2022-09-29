@@ -4,7 +4,7 @@
     $duracion = $_POST['duracion'];
     $prioridad = $_POST['prioridad'];
     $estado = "En espera";
-    $id = 0;
+    $id = 1;
     $sql = "SELECT MAX(id_proceso) FROM proceso";
     $valor_id = mysqli_query($conexion,$sql);
     $idmax= mysqli_fetch_array($valor_id);

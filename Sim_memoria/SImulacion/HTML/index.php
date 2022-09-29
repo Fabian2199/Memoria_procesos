@@ -18,7 +18,6 @@ $proceso = getProceso();
     <link rel="stylesheet" type="text/css" href="../CSS/principal.css">
     <link rel="stylesheet" type="text/css" href="../CSS/tablas.css">
     <link rel="stylesheet" type="text/css" href="../CSS/popup.css">
-    <script language="javascript" src="..\..\js\jquery-3.6.0.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 
@@ -28,7 +27,7 @@ $proceso = getProceso();
         <div class="contenedor">
             <img src="../img_gen/logoBFree.png" class="logogym">
 
-            <!-- clase overlay es una ventana emergente para agregar un cliente -->
+            <!-- clase overlay es una ventana emergente para agregar un proceso -->
             <div class="overlay" id="overlay">
                 <div class="popup" id="popup">
                     <a href="#" id="btn-cerrar-popup" class="btn-cerrar-popup"><i class="fas fa-times"></i></a>
@@ -95,7 +94,7 @@ $proceso = getProceso();
                                     <tr>
                                         <th>PR <?php echo $row['id_proceso']; ?> </th>
                                         <th><?php echo $row['tamaño']; ?> Kb</th>
-                                        <th><?php echo $row['duracion']; ?> ms</th>
+                                        <th><?php echo $row['duracion']; ?> Seg</th>
                                         <th><?php echo $row['prioridad']; ?></th>
                                     </tr>
                                 <?php } ?>

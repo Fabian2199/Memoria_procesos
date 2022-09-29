@@ -10,8 +10,6 @@ while ($row = $datosMemoria->fetch_assoc()) {
 $procesos = getProceso();
 $procesos_activos = procesosActivos($procesos);
 $procesos_ejecutando = simMemoria($tamaño, $procesos_activos);
-$proceos_finalizados = getProcesosTerm();
-//$procesos_activos= actualizarActivos($procesos_activos,$procesos_ejecutando);
 ?>
 
 <!DOCTYPE html>
@@ -82,6 +80,7 @@ $proceos_finalizados = getProcesosTerm();
                             </thead>
                             <tbody id="cuerpo_tabla_ter"> </tbody>
                         </table>
+                        <a href="../PHP/eliminar.php?id_memoria=<?php echo $memoria; ?>">Terminar</a>
                     </div>
                 </div>
             </div>
@@ -106,24 +105,23 @@ $lista_activos = json_encode($procesos_activos);
     tamano_memoria=<?php echo $tamaño ?>;
     //------------------------------------
     var iterador=0;
-    var lista_activos = <?php echo $lista_activos ?>;//1
-    
-    var lista_ejecutando = <?php echo $lista ?>;//2
-    lista_activos = actu_lista_activos(lista_activos,lista_ejecutando);
+    var lista_activos = <?php echo $lista_activos ?>;
+    var lista_ejecutando = <?php echo $lista ?>;
     lista_terminados=[];
-    var libre = espacio_libre(lista_ejecutando,tamano_memoria);//3
+    lista_activos = actu_lista_activos(lista_activos,lista_ejecutando);
+    var libre = espacio_libre(lista_ejecutando,tamano_memoria);
     function ejecucion() {
         iterador++;
         listas_datos =ejecutarProcesos(lista_ejecutando,iterador,lista_terminados,libre,lista_activos,tamano_memoria);
-        lista_ejecutando = listas_datos[0];//4
-        lista_terminados = listas_datos[1];//5 
+        lista_ejecutando = listas_datos[0];
+        lista_terminados = listas_datos[1];
         libre = listas_datos[2];
         lista_activos=listas_datos[3];
         dibujarTabla(lista_activos, 'activos');
         dibujarGrafica(lista_ejecutando, libre);
-        console.log(iterador);
     }
-    setInterval('ejecucion()',2000);
+    setInterval('ejecucion()',3000);
+    
     dibujarTabla(lista_activos, 'activos');
     dibujarGrafica(lista_ejecutando, libre);
 

@@ -7,6 +7,7 @@ class proceso
     public $prioridad;
     public $estado;
     public $cronometro=0;
+    public $tEjecucion=0;
 
     public function __construct($id,$tam,$dur,$pri,$est)
     {

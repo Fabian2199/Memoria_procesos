@@ -27,13 +27,11 @@ function actu_lista_activos(activos,ejecutando) {
     for (let index = 0; index < lista_ejecutando.length; index++) {
         proceso =lista_ejecutando[index];
         indice = lista_activos.findIndex(elemento => {return elemento.id_proceso === proceso.id_proceso } );
-        console.log(indice)
         if (indice>=0) {
             lista_activos.splice(indice,1); 
         }
     }
     activos=convertirJSON(lista_activos);
-    console.log(activos);
     return activos;
 }
 function convertirArray(lista){
@@ -58,35 +56,31 @@ function ejecutarUnProceso(proceso,temp) {
     crono = proceso.cronometro;
     crono++
     if (duracion==crono) {
-        proceso.duracion = temp;
+        proceso.duracion =temp;
+        proceso.estado = "Terminado";
     }
     proceso.cronometro = crono;
     return proceso;
 }
-function eliminarProceso(proceso,ejecutando){
-    lista_ejecutando=convertirArray(ejecutando);
-    indice =lista_ejecutando.findIndex(elemento => {return elemento.id_proceso === proceso.id_proceso } );
-    lista_ejecutando.splice(indice,1);
-    ejecutando = convertirJSON(lista_ejecutando);
-    return ejecutando;
-}
 function ejecutarProcesos(ejecutando,temp,terminado,libre,activos,tamano_memoria) {
     ejecutando2 = ejecutando;
+    console.log("------------");
     for(x of ejecutando){
+       
+        console.log("id "+x.id_proceso+" dur "+x.duracion+ " crono "+x.cronometro);
         x = ejecutarUnProceso(x,temp);
-        if (x.duracion==temp) {
-            console.log('entre');
-            x.estado = "Terminado";
+        
+        if (x.estado=="Terminado") {
             terminado.push(x);
-            ejecutando2 = eliminarProceso(x,ejecutando);
+            ejecutando2 = actu_lista_activos(ejecutando,terminado);
             dibujarTablaT(terminado, 'terminados');
             libre= espacio_libre(ejecutando2,tamano_memoria);
             ejecutando2= actu_lista_memoria(activos,ejecutando2,libre);
-            
         }
     }
     ejecutando = ejecutando2;
     activos = actu_lista_activos(activos,ejecutando);
+    
     datos = [ejecutando,terminado,libre,activos];
     return datos;
 }

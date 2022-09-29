@@ -21,7 +21,7 @@ function dibujarTablaT(lista,id_tabla,tamano_lista) {
         fila.appendChild(td);
 
         td = document.createElement('th');
-        td.innerText = p.cronometro+" Seg";
+        td.innerText = p.duracion+" Seg";
         fila.appendChild(td);
 
         td = document.createElement('th');
