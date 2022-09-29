@@ -76,6 +76,7 @@ function ejecutarProcesos(ejecutando,temp,terminado,libre,activos,tamano_memoria
             dibujarTablaT(terminado, 'terminados');
             libre= espacio_libre(ejecutando2,tamano_memoria);
             ejecutando2= actu_lista_memoria(activos,ejecutando2,libre);
+            libre= espacio_libre(ejecutando2,tamano_memoria);
         }
     }
     ejecutando = ejecutando2;
