@@ -1,13 +1,13 @@
-function dibujarTabla(lista,id_tabla,tamano_lista) {
+function dibujarTablaT(lista,id_tabla,tamano_lista) {
     let procesos=[];
     for (x of lista) {
        var proceso = x;
        procesos.push(proceso)
     }
     let tablaProceso = document.getElementById(id_tabla);
-    document.getElementById("cuerpo_tabla").remove();
+    document.getElementById("cuerpo_tabla_ter").remove();
     let cuerpoTabla = document.createElement('tbody');
-    cuerpoTabla.setAttribute("id","cuerpo_tabla")
+    cuerpoTabla.setAttribute("id","cuerpo_tabla_ter")
     procesos.forEach(p => {
         var id = p.id_proceso;
         let fila = document.createElement('tr');
@@ -21,7 +21,7 @@ function dibujarTabla(lista,id_tabla,tamano_lista) {
         fila.appendChild(td);
 
         td = document.createElement('th');
-        td.innerText = p.duracion+" Seg";
+        td.innerText = p.cronometro+" Seg";
         fila.appendChild(td);
 
         td = document.createElement('th');

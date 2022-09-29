@@ -72,23 +72,15 @@ $proceos_finalizados = getProcesosTerm();
                 <div class="proceso" id="tar">
                     <div class="adelante">
                         <h1>Procesos terminados</h1>
-                        <table>
+                        <table id="terminados">
                             <thead>
                                 <th>Id proceso</th>
                                 <th>Espacio en memoria</th>
                                 <th>Tiempo de ejecucion</th>
+                                <th>Prioridad</th>
                                 <th>Estado</th>
                             </thead>
-                            <tbody>
-                                <?php while ($row = $proceos_finalizados->fetch_assoc()) { ?>
-                                    <tr>
-                                        <th><?php echo $row['id_proceso']; ?> </th>
-                                        <th><?php echo $row['tamaño']; ?> Kb</th>
-                                        <th><?php echo $row['duracion']; ?> ms</th>
-                                        <th><?php echo $row['estado']; ?></th>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
+                            <tbody id="cuerpo_tabla_ter"> </tbody>
                         </table>
                     </div>
                 </div>
@@ -99,46 +91,41 @@ $proceos_finalizados = getProcesosTerm();
 <script src="../JS/contador.js"></script>
 <?php
 //datos lista de procesos ejecutando
-$tamaño_libre_memoria = $procesos_ejecutando[0];
-unset($procesos_ejecutando[0]);
-$tamañó_lista = count($procesos_ejecutando);
-$lista = json_encode($procesos_ejecutando)
-?>
-<?php
+$lista = json_encode($procesos_ejecutando);
 //datos lista de procesos activos
-$tamañó_lista_activos = count($procesos_activos);
-$lista_activos = json_encode($procesos_activos)
+$lista_activos = json_encode($procesos_activos);
+
 ?>
 <script src="../JS//helpers.js"></script>
 <Script src="../JS/grafica.js"></Script>
 <Script src="../JS/tabla.js"></Script>
+<Script src="../JS/tablaT.js"></Script>
 <Script src="../JS/funciones_simulador.js"></Script>
 <script>
+    //tamañó memoria
+    tamano_memoria=<?php echo $tamaño ?>;
+    //------------------------------------
     var iterador=0;
+    var lista_activos = <?php echo $lista_activos ?>;//1
+    
+    var lista_ejecutando = <?php echo $lista ?>;//2
+    lista_activos = actu_lista_activos(lista_activos,lista_ejecutando);
+    lista_terminados=[];
+    var libre = espacio_libre(lista_ejecutando,tamano_memoria);//3
     function ejecucion() {
         iterador++;
-        var datos = [];
-        //datos procesos ejecutando
-        var lista_ejecutando = <?php echo $lista ?>;
-        var tamano_lista_ejecutando = <?php echo $tamañó_lista ?>;
-        var libre = <?php echo $tamaño_libre_memoria ?>;
-        //datos procesos activos
-        lista_activos = <?php echo $lista_activos ?>;
-        lista_activos = prueba(lista_activos,iterador);
-        var tamano_lista_activos = <?php echo $tamañó_lista_activos ?>;
-        datos.push(lista_ejecutando, tamano_lista_ejecutando, libre, lista_activos, tamano_lista_activos);
-        dibujarTabla(lista_activos, 'activos', tamano_lista_activos);
-        dibujarGrafica(lista_ejecutando, tamano_lista_ejecutando, libre);
-        return datos;
+        listas_datos =ejecutarProcesos(lista_ejecutando,iterador,lista_terminados,libre,lista_activos,tamano_memoria);
+        lista_ejecutando = listas_datos[0];//4
+        lista_terminados = listas_datos[1];//5 
+        libre = listas_datos[2];
+        lista_activos=listas_datos[3];
+        dibujarTabla(lista_activos, 'activos');
+        dibujarGrafica(lista_ejecutando, libre);
+        console.log(iterador);
     }
-    setInterval('ejecucion()', 5000);
-    var datos = ejecucion();
-    //datos procesos ejecutando
-    var lista_ejecutando = datos[0];
-    var tamano_lista_ejecutando = datos[1];
-    var libre = datos[1];
-    setInterval(console.log(iterador), 5000);
-    //dibujarGrafica(lista_ejecutando, tamano_lista_ejecutando, libre);
+    setInterval('ejecucion()',2000);
+    dibujarTabla(lista_activos, 'activos');
+    dibujarGrafica(lista_ejecutando, libre);
 
 </script>
 

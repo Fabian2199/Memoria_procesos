@@ -1,14 +1,15 @@
-function dibujarGrafica(lista,tamano,espacio_memoria) {
+function dibujarGrafica(lista,espacio_memoria) {
     label=[];
     datas=[];
     var memorias = "Memoria Espacio libre: "+espacio_memoria+" Kb";
     label.push(memorias)
     datas.push(espacio_memoria)
-    for (let index = 1; index <= tamano; index++) {
-        var proceso="PR "+lista[index].id_proceso+" Espacio ocupado: "+lista[index].tamano+" Kb";
-        var espacio=lista[index].tamano;
+    for (x of lista) {
+        var proceso="PR "+x.id_proceso+" Espacio ocupado: "+x.tamano+" Kb";
+        var espacio=x.tamano;
         label.push(proceso)
         datas.push(espacio)
+        
     }
 
     Chart.defaults.color = '#282625'

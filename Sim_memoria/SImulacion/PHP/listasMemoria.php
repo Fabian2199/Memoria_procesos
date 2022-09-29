@@ -20,16 +20,16 @@ function actualizarActivos($listaActivos,$listaEjecutando)
 function simMemoria($tam, $activos)
 {
     $procesos_memoria = array();
-    array_push($procesos_memoria,$tam);
+    //array_push($procesos_memoria,$tam);
     
     $contador= count($activos);
     for ($i = 0; $i < $contador; $i++) {
         $tamaño = $activos[$i]->getTamaño();
-        if ($procesos_memoria[0] > $tamaño) {
+        if ($tam > $tamaño) {
             $estado ="Ejecutando";
             $activos[$i]->setEstado($estado);
             array_push($procesos_memoria, $activos[$i]);
-            $procesos_memoria[0] = $procesos_memoria[0] - $tamaño;
+            $tam = $tam - $tamaño;
         } 
     }
     
